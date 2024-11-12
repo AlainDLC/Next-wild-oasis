@@ -1,9 +1,9 @@
 import Counter from "@/app/_components/Counter";
 import CabinCard from "../_components/CabinCard";
+import { getCabins } from "../_lib/data-service";
 
-export default function Page() {
-  // CHANGE
-  const cabins = [];
+export default async function Page() {
+  const cabins = await getCabins();
 
   return (
     <div>
