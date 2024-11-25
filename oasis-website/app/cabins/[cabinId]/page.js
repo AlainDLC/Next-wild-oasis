@@ -5,8 +5,16 @@ import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { Suspense } from "react";
 
 export async function generateMetadata({ params }) {
-  const { name } = await getCabin(params.cabinId);
-  return { title: `Cabin ${name}` };
+  try {
+    const { cabinId } = params;
+    if (!cabinId) throw new Error("Missing cabinId in params.");
+
+    const { name } = await getCabin(cabinId);
+    return { title: `Cabin ${name}` };
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    return { title: "Cabin Not Found" };
+  }
 }
 
 export async function generateStaticParams() {
